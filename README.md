@@ -1,16 +1,16 @@
 #api-doc
 
 ### 使用方法
-####1、安装扩展
+#### 1、安装扩展
 ```
 composer require misscx/api-doc
 ```
 
-####2、静态资源复制
+#### 2、静态资源复制
 - 将本插件目录src/apidoc复制到的到网站静态资源目录内，如将apidoc目录复制到网站根目录的/static下，目录结构如下：
 /static/apidoc
 
-####3、配置参数
+#### 3、配置参数
 安装好扩展后在 app\config\ 文件夹下会生成 doc.php 配置文件，打开配置文件修改如下内容：
 - 修改静态资源所在位置
 ```
@@ -25,7 +25,7 @@ composer require misscx/api-doc
 - 配置路由
 将本扩展src目录内route文件夹中的路由配置文件doc.php复制到路由目录内，如：/route/doc.php。
 
-####4、注释举例
+#### 4、注释举例
 - 插件目录下有个Demo.php，可将其放入app/controller/下,单应用模式下有效，对于多应用模式，请根Demo.php进行修改。
 - Demo.php文件如下：返回参数支持数组及多维数组
 ```
@@ -97,11 +97,11 @@ class Demo
     }
 }
 ```
-####5、访问地址
+#### 5、访问地址
 
 在浏览器访问http://你的域名/doc 或者 http://你的域名/index.php/doc 查看接口文档
 
-###联系作者
+### 联系作者
 
 作者博客地址：[http://huikon.cn](http://huikon.cn "博客")
 
@@ -109,13 +109,13 @@ QQ：331349451
 
 QQ群：254929907
 
-###其它项目
+### 其它项目
 
 CYAdmin：[https://gitee.com/hanchuan/cycms](https://gitee.com/hanchuan/cycms)
 
 CYAdmin的演示地址：[http://cyadmin.mychunyan.com/](http://cyadmin.mychunyan.com/)
 
-###特别鸣谢
+### 特别鸣谢
 
 本扩展基于weiwei/api-doc ThinkPHP5.0改造而来，本人非常喜欢原扩展，无奈ThinkPHP6.0发布以来原作者一直未更新该扩展，本人经修改后发布出来，在此对原作者表示由衷感谢和敬意！
 
