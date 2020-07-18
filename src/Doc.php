@@ -6,7 +6,7 @@ class Doc
     protected  $config = [
         'title'=>'APi接口文档',
         'version'=>'1.0.0',
-        'copyright'=>'Powered By Zhangweiwei',
+        'copyright'=>'Powered By 寒川',
         'password' => '',
         'static_path' => '',
         'controller' => [],

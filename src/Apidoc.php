@@ -41,7 +41,7 @@ class Apidoc
 
         $this->doc = new Doc((array) Config::get('doc'));
         $this->root = Request::root(true);
-        $this->assets_path = $this->root.'/vendor/weiwei/api-doc/src/assets';
+        $this->assets_path = $this->root.'/vendor/misscx/api-doc/src/assets';
         
         View::assign('title',$this->doc->__get("title"));
         View::assign('version',$this->doc->__get("version"));
