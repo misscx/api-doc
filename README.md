@@ -103,5 +103,4 @@ class Demo
 ###特别鸣谢
 本扩展基于weiwei/api-doc ThinkPHP5.0改造而来，本人非常喜欢原扩展，无奈ThinkPHP出6.0发布以来原作者一直未更新该扩展，本人经修改后发布出来，在此对原作者表示由衷感谢和敬意！
 
-原扩展在地址：[https://github.com/zhangweiwei0326/api-doc](https://github.com/zhangweiwei0326/api-doc "原扩展在地址"). 
-
+原扩展在地址：[https://github.com/zhangweiwei0326/api-doc](https://github.com/zhangweiwei0326/api-doc "原扩展在地址").

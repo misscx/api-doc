@@ -5,7 +5,6 @@ use think\facade\Request;
 use think\facade\Config;
 use think\facade\View;
 
-
 class Apidoc
 {
     protected $assets_path = "";
@@ -13,7 +12,7 @@ class Apidoc
     protected $root = "";
 
     /**
-     * @var Doc 
+     * @var Doc
      */
     protected $doc;
     /**
@@ -38,18 +37,16 @@ class Apidoc
 
     public function __construct()
     {
-
         $this->doc = new Doc((array) Config::get('doc'));
         $this->root = Request::root(true);
         $this->assets_path = $this->root.$this->doc->static_path;
-        
-        View::assign('title',$this->doc->__get("title"));
-        View::assign('version',$this->doc->__get("version"));
-        View::assign('copyright',$this->doc->__get("copyright"));
+
+        View::assign('title', $this->doc->__get("title"));
+        View::assign('version', $this->doc->__get("version"));
+        View::assign('copyright', $this->doc->__get("copyright"));
 
         View::config(['view_path' =>__DIR__.'/view/']);//模版路径
         View::assign('static', $this->assets_path);//静态文件
-
     }
 
     /**
@@ -59,13 +56,13 @@ class Apidoc
     protected function checkLogin()
     {
         $pass = $this->doc->__get("password");
-        if($pass){
-            if(session('pass') === md5($pass)){
+        if ($pass) {
+            if (session('pass') === md5($pass)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return true;
         }
     }
@@ -101,12 +98,12 @@ class Apidoc
     public function login()
     {
         $pass = $this->doc->__get("password");
-        if($pass && Request::param('pass') === $pass){
+        if ($pass && Request::param('pass') === $pass) {
             session('pass', md5($pass));
             $data = ['status' => '200', 'message' => '登录成功'];
-        }else if(!$pass){
+        } elseif (!$pass) {
             $data = ['status' => '200', 'message' => '登录成功'];
-        }else{
+        } else {
             $data = ['status' => '300', 'message' => '密码错误'];
         }
         return response($data, 200, [], 'json');
@@ -118,9 +115,9 @@ class Apidoc
      */
     public function index()
     {
-        if($this->checkLogin()){
+        if ($this->checkLogin()) {
             return $this->show('index', ['doc' => Request::param('doc')]);
-        }else{
+        } else {
             return redirect('doc/pass');
         }
     }
@@ -131,13 +128,10 @@ class Apidoc
      */
     public function search()
     {
-        if(Request::isAjax())
-        {
+        if (Request::isAjax()) {
             $data = $this->doc->searchList(Request::param('query'));
             return response($data, 200, [], 'json');
-        }
-        else
-        {
+        } else {
             $module = $this->doc->getModuleList();
             return $this->show('search', ['module' => $module]);
         }
@@ -150,14 +144,14 @@ class Apidoc
      */
     protected function setIcon($actions, $num = 1)
     {
-        foreach ($actions as $key=>$moudel){
-            if(isset($moudel['actions'])){
+        foreach ($actions as $key=>$moudel) {
+            if (isset($moudel['actions'])) {
                 $actions[$key]['iconClose'] = $this->assets_path."/js/zTree_v3/img/zt-folder.png";
                 $actions[$key]['iconOpen'] = $this->assets_path."/js/zTree_v3/img/zt-folder-o.png";
                 $actions[$key]['open'] = true;
                 $actions[$key]['isParent'] = true;
                 $actions[$key]['actions'] = $this->setIcon($moudel['actions'], $num = 1);
-            }else{
+            } else {
                 $actions[$key]['icon'] = $this->assets_path."/js/zTree_v3/img/zt-file.png";
                 $actions[$key]['isParent'] = false;
                 $actions[$key]['isText'] = true;
@@ -186,8 +180,7 @@ class Apidoc
     {
         list($class, $action) = explode("::", $name);
         $action_doc = $this->doc->getInfo($class, $action);
-        if($action_doc)
-        {
+        if ($action_doc) {
             $return = $this->doc->formatReturn($action_doc);
             $action_doc['header'] = isset($action_doc['header']) ? array_merge($this->doc->__get('public_header'), $action_doc['header']) : [];
             $action_doc['param'] = isset($action_doc['param']) ? array_merge($this->doc->__get('public_param'), $action_doc['param']) : [];
@@ -216,13 +209,13 @@ class Apidoc
         unset($data['header']);
         $res['result'] = $this->http_request($api_url, $cookie, $data, $method, $headers);
 
-        if($res['result']){
+        if ($res['result']) {
             $res['status'] = '200';
             $res['meaasge'] = 'success';
         }
         return response($res, 200, [], 'json');
     }
-    
+
     /**
      * curl模拟请求方法
      * @param $url
@@ -232,25 +225,26 @@ class Apidoc
      * @param array $headers
      * @return mixed
      */
-    private function http_request($url, $cookie, $data = array(), $method = array(), $headers = array()){
+    private function http_request($url, $cookie, $data = array(), $method = array(), $headers = array())
+    {
         $curl = curl_init();
-        if(count($data) && $method == "GET"){
+        if (count($data) && $method == "GET") {
             $data = array_filter($data);
             $url .= "?".http_build_query($data);
             $url = str_replace(array('%5B0%5D'), array('[]'), $url);
         }
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        if (count($headers)){
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        if (count($headers)) {
             $head = array();
-            foreach ($headers as $name=>$value){
+            foreach ($headers as $name=>$value) {
                 $head[] = $name.":".$value;
             }
             curl_setopt($curl, CURLOPT_HTTPHEADER, $head);
         }
         $method = strtoupper($method);
-        switch($method) {
+        switch ($method) {
             case 'GET':
                 break;
             case 'POST':
@@ -265,7 +259,7 @@ class Apidoc
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 break;
         }
-        if (!empty($cookie)){
+        if (!empty($cookie)) {
             curl_setopt($curl, CURLOPT_COOKIE, $cookie);
         }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

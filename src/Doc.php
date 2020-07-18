@@ -3,7 +3,7 @@ namespace Api\Doc;
 
 class Doc
 {
-    protected  $config = [
+    protected $config = [
         'title'=>'APi接口文档',
         'version'=>'1.0.0',
         'copyright'=>'Powered By 寒川',
@@ -71,10 +71,8 @@ class Doc
     {
         $controller = $this->config['controller'];
         $list = [];
-        foreach ($controller as $class)
-        {
-            if(class_exists($class))
-            {
+        foreach ($controller as $class) {
+            if (class_exists($class)) {
                 $module = [];
                 $reflection = new \ReflectionClass($class);
                 $doc_str = $reflection->getDocComment();
@@ -85,38 +83,36 @@ class Doc
                 $method = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
                 $filter_method = array_merge(['__construct'], $this->config['filter_method']);
                 $module['actions'] = [];
-                foreach ($method as $action){
-                    if(!in_array($action->name, $filter_method))
-                    {
+                foreach ($method as $action) {
+                    if (!in_array($action->name, $filter_method)) {
                         $doc = new Parser();
                         $doc_str = $action->getDocComment();
-                        if($doc_str)
-                        {
+                        if ($doc_str) {
                             $action_doc = $doc->parse($doc_str);
                             $action_doc['name'] = $class."::".$action->name;
-                            if(array_key_exists('title', $action_doc)){
-                                if(array_key_exists('module', $action_doc)){
+                            if (array_key_exists('title', $action_doc)) {
+                                if (array_key_exists('module', $action_doc)) {
                                     $key = array_search($action_doc['module'], array_column($module['actions'], 'title'));
-                                    if($key === false){
+                                    if ($key === false) {
                                         $action = $module;
                                         $action['title'] = $action_doc['module'];
                                         $action['module'] = $action_doc['module'];
                                         $action['actions'] = [];
                                         array_push($action['actions'], $action_doc);
                                         array_push($module['actions'], $action);
-                                    }else{
+                                    } else {
                                         array_push($module['actions'][$key]['actions'], $action_doc);
                                     }
-                                }else{
+                                } else {
                                     array_push($module['actions'], $action_doc);
                                 }
                             }
                         }
                     }
                 }
-                if(array_key_exists('group', $module)){
+                if (array_key_exists('group', $module)) {
                     $key = array_search($module['group'], array_column($list, 'title'));
-                    if($key === false){ //创建分组
+                    if ($key === false) { //创建分组
                         $floder = [
                             'title' => $module['group'],
                             'description' => '',
@@ -126,10 +122,10 @@ class Doc
                         ];
                         array_push($floder['actions'], $module);
                         array_push($list, $floder);
-                    }else{
+                    } else {
                         array_push($list[$key]['actions'], $module);
                     }
-                }else{
+                } else {
                     array_push($list, $module);
                 }
             }
@@ -151,21 +147,19 @@ class Doc
                 $doc_str = $reflection->getDocComment();
                 $doc = new Parser();
                 $class_doc = $doc->parse($doc_str);
-                if(array_key_exists('group', $class_doc)){
+                if (array_key_exists('group', $class_doc)) {
                     $key = array_search($class_doc['group'], array_column($list, 'title'));
-                    if($key === false){ //创建分组
+                    if ($key === false) { //创建分组
                         $floder = [
                             'title' => $class_doc['group'],
                             'children' => []
                         ];
                         array_push($floder['children'], $class_doc);
                         array_push($list, $floder);
-                    }
-                    else
-                    {
+                    } else {
                         array_push($list[$key]['children'], $class_doc);
                     }
-                }else{
+                } else {
                     array_push($list, $class_doc);
                 }
             }
@@ -182,14 +176,14 @@ class Doc
     public function getInfo($class, $action)
     {
         $action_doc = [];
-        if($class && class_exists($class)){
+        if ($class && class_exists($class)) {
             $reflection = new \ReflectionClass($class);
             $doc_str = $reflection->getDocComment();
             $doc = new Parser();
             $class_doc = $doc->parse($doc_str);
             $class_doc['header'] = isset($class_doc['header'])? $class_doc['header'] : [];
             $class_doc['param'] = isset($class_doc['param']) ? $class_doc['param'] : [];
-            if($reflection->hasMethod($action)) {
+            if ($reflection->hasMethod($action)) {
                 $method = $reflection->getMethod($action);
                 $doc = new Parser();
                 $action_doc = $doc->parse($method->getDocComment());
@@ -210,27 +204,22 @@ class Doc
     {
         $controller = $this->config['controller'];
         $list = [];
-        foreach ($controller as $class)
-        {
-            if(class_exists($class))
-            {
+        foreach ($controller as $class) {
+            if (class_exists($class)) {
                 $reflection = new \ReflectionClass($class);
                 $method = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
                 $filter_method = array_merge(['__construct'], $this->config['filter_method']);
-                foreach ($method as $action){
-                    if(!in_array($action->name, $filter_method))
-                    {
+                foreach ($method as $action) {
+                    if (!in_array($action->name, $filter_method)) {
                         $doc = new Parser();
                         $doc_str = $action->getDocComment();
-                        if($doc_str)
-                        {
+                        if ($doc_str) {
                             $action_doc = $doc->parse($doc_str);
                             $action_doc['name'] = $class."::".$action->name;
-                            if((isset($action_doc['title']) && strpos($action_doc['title'], $keyword) !== false)
+                            if ((isset($action_doc['title']) && strpos($action_doc['title'], $keyword) !== false)
                                     || (isset($action_doc['description']) && strpos($action_doc['description'], $keyword) !== false)
                                     || (isset($action_doc['author']) && strpos($action_doc['author'], $keyword) !== false)
-                                    || (isset($action_doc['url'])  && strpos($action_doc['url'], $keyword) !== false))
-                            {
+                                    || (isset($action_doc['url'])  && strpos($action_doc['url'], $keyword) !== false)) {
                                 array_push($list, $action_doc);
                             }
                         }
@@ -255,12 +244,11 @@ class Doc
         }
         $json .= '&nbsp;&nbsp;"data":{<br/>';
         $returns = isset($doc['return']) ? $doc['return'] : [];
-        foreach ($returns as $val)
-        {
+        foreach ($returns as $val) {
             list($name, $value) =  explode(":", trim($val));
-            if(strpos($value, '@') != false){
+            if (strpos($value, '@') != false) {
                 $json .= $this->string2jsonArray($doc, $val, '&nbsp;&nbsp;&nbsp;&nbsp;');
-            }else{
+            } else {
                 $json .= '&nbsp;&nbsp;&nbsp;&nbsp;' . $this->string2json(trim($name), $value);
             }
         }
@@ -275,10 +263,11 @@ class Doc
      * @param $val
      * @return string
      */
-    private function string2json($name, $val){
-        if(strpos($val,'#') != false){
-            return '"'.$name.'": ["'.str_replace('#','',$val).'"],<br/>';
-        }else {
+    private function string2json($name, $val)
+    {
+        if (strpos($val, '#') != false) {
+            return '"'.$name.'": ["'.str_replace('#', '', $val).'"],<br/>';
+        } else {
             return '"'.$name.'":"'.$val.'",<br/>';
         }
     }
@@ -290,27 +279,28 @@ class Doc
      * @param $space
      * @return string
      */
-    private function string2jsonArray($doc, $val, $space){
+    private function string2jsonArray($doc, $val, $space)
+    {
         list($name, $value) =  explode(":", trim($val));
         $json = "";
-        if(strpos($value, "@!") != false){
-            $json .= $space.'"'.$name.'":{//'.str_replace('@!','',$value).'<br/>';
-        }else{
-            $json .= $space.'"'.$name.'":[{//'.str_replace('@','',$value).'<br/>';
+        if (strpos($value, "@!") != false) {
+            $json .= $space.'"'.$name.'":{//'.str_replace('@!', '', $value).'<br/>';
+        } else {
+            $json .= $space.'"'.$name.'":[{//'.str_replace('@', '', $value).'<br/>';
         }
         $return = isset($doc[$name]) ? $doc[$name] : [];
-        if(preg_match_all('/(\w+):(.*?)[\s\n]/s', $return." ", $meatchs)){
-            foreach ($meatchs[0] as $key=>$v){
-                if(strpos($meatchs[2][$key],'@') != false){
-                    $json .= $this->string2jsonArray($doc,$v,$space.'&nbsp;&nbsp;');
-                } else{
+        if (preg_match_all('/(\w+):(.*?)[\s\n]/s', $return." ", $meatchs)) {
+            foreach ($meatchs[0] as $key=>$v) {
+                if (strpos($meatchs[2][$key], '@') != false) {
+                    $json .= $this->string2jsonArray($doc, $v, $space.'&nbsp;&nbsp;');
+                } else {
                     $json .= $space.'&nbsp;&nbsp;'. $this->string2json(trim($meatchs[1][$key]), $meatchs[2][$key]);
                 }
             }
         }
-        if(strpos($value, "@!") != false){
+        if (strpos($value, "@!") != false) {
             $json .= $space."}<br/>";
-        }else{
+        } else {
             $json .= $space."}]<br/>";
         }
         return $json;
