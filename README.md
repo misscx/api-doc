@@ -3,7 +3,7 @@
 ### 使用方法
 ####1、安装扩展
 ```
-composer require misscx/api-doc dev-master
+composer require misscx/api-doc
 ```
 
 ####2、静态资源复制
