@@ -8,7 +8,7 @@ class Doc
         'version'=>'1.0.0',
         'copyright'=>'Powered By 寒川',
         'password' => '',
-        'static_path' => '/public/apidoc/',
+        'static_path' => '/static/apidoc/',
         'controller' => [],
         'filter_method'=>['_empty'],
         'return_format' => [
