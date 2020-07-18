@@ -101,6 +101,10 @@ class Demo
 
 在浏览器访问http://你的域名/doc 或者 http://你的域名/index.php/doc 查看接口文档
 
+#### 6、扩展演示地址
+
+演示地址：[http://cyadmin.mychunyan.com/doc](http://cyadmin.mychunyan.com/doc)
+
 ### 联系作者
 
 作者博客地址：[http://huikon.cn](http://huikon.cn "博客")
