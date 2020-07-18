@@ -1,0 +1,29 @@
+{
+    "name": "misscx/api-doc",
+    "description": "基于ThinkPHP6的API注释文档生成扩展",
+    "type": "think-extend",
+    "authors": [
+        {
+            "name": "寒川",
+            "email": "admin@huikon.cn"
+        }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Api\\Doc\\": "src"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    },
+    "require": {
+        "topthink/think-helper": ">=1.0.4",
+        "topthink/think-installer": ">=1.0.10"
+    },
+    "extra": {
+        "think-config": {
+            "doc": "src/config.php"
+        }
+    }
+}
