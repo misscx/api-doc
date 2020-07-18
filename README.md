@@ -99,8 +99,16 @@ class Demo
 ```
 ####5、在浏览器访问http://你的域名/doc 或者 http://你的域名/index.php/doc 查看接口文档
 
+###联系作者
+作者博客地址：[http://huikon.cn](http://huikon.cn "博客").
+QQ：331349451
+QQ群：254929907
+
+###其它项目
+CYAdmin：[https://gitee.com/hanchuan/cycms](https://gitee.com/hanchuan/cycms)
+CYAdmin的演示地址：[http://cyadmin.mychunyan.com/](http://cyadmin.mychunyan.com/)
 
 ###特别鸣谢
 本扩展基于weiwei/api-doc ThinkPHP5.0改造而来，本人非常喜欢原扩展，无奈ThinkPHP6.0发布以来原作者一直未更新该扩展，本人经修改后发布出来，在此对原作者表示由衷感谢和敬意！
 
-原扩展在地址：[https://github.com/zhangweiwei0326/api-doc](https://github.com/zhangweiwei0326/api-doc "原扩展在地址").
+原扩展在地址：[https://github.com/zhangweiwei0326/api-doc](https://github.com/zhangweiwei0326/api-doc).
