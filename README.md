@@ -113,7 +113,7 @@ QQ：331349451
 
 QQ群：254929907
 
-### 其它项目
+### 作者其它项目
 
 CYAdmin：[https://gitee.com/hanchuan/cycms](https://gitee.com/hanchuan/cycms)
 
