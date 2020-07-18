@@ -3,21 +3,30 @@
 ### 使用方法
 ####1、安装扩展
 ```
-composer require misscx/api-doc
+composer require misscx/api-doc dev-master
 ```
 
-####2、配置参数
-安装好扩展后在 app\config\ 文件夹下会生成 doc.php 配置文件
-- 在controller参数中添加对应的类
+####2、复制插件目录到网站静态资源目录
+
+####3、配置参数
+安装好扩展后在 app\config\ 文件夹下会生成 doc.php 配置文件，打开配置文件修改如下内容：
+- 修改静态资源所在位置
+```
+'static_path' => '/static/apidoc',//静态资源所在位置
+```
+- 在controller参数中添加需要生成文档的类
 ```
     'controller' => [
         'app\\index\\controller\\Demo' //这个是控制器的命名空间+控制器名称
     ]
 ```
-####3、配置路由
+- 配置路由
 将本扩展src目录内route文件夹中的doc.php复制到路由目录内。
 
 ####4、在相关接口类中增加注释参数( group 参数将接口分组，可选)
+
+####5、注释举例
+- 插件目录下有个Demo.php，可将其放入对应目录，查看效果
 - 方法如下：返回参数支持数组及多维数组
 ```
 <?php
@@ -87,7 +96,7 @@ class Demo
     }
 }
 ```
-####4、在浏览器访问http://你的域名/doc 或者 http://你的域名/index.php/doc 查看接口文档
+####5、在浏览器访问http://你的域名/doc 或者 http://你的域名/index.php/doc 查看接口文档
 
 
 ###特别鸣谢

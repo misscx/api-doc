@@ -41,14 +41,14 @@ class Apidoc
 
         $this->doc = new Doc((array) Config::get('doc'));
         $this->root = Request::root(true);
-        $this->assets_path = $this->root.'/vendor/misscx/api-doc/src/assets';
+        $this->assets_path = $this->root.$this->doc->static_path;
         
         View::assign('title',$this->doc->__get("title"));
         View::assign('version',$this->doc->__get("version"));
         View::assign('copyright',$this->doc->__get("copyright"));
 
-        View::config(['view_path' =>__DIR__.'/view/']);
-        View::assign('static', $this->assets_path);//模版路径
+        View::config(['view_path' =>__DIR__.'/view/']);//模版路径
+        View::assign('static', $this->assets_path);//静态文件
 
     }
 

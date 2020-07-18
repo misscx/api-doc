@@ -4,6 +4,7 @@ return [
     'version'=>'1.0.0', //文档版本
     'copyright'=>'Powered By 寒川', //版权信息
     'password' => '', //访问密码，为空不需要密码
+    'static_path' => '/static/apidoc',//静态资源所在位置
     'controller' => [
         //需要生成文档的类
         'app\\index\\controller\\Demo',
