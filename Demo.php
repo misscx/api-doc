@@ -1,5 +1,5 @@
 <?php
-namespace app\index\controller;
+namespace app\controller;
 
 use think\facade\Request;
 /**
@@ -15,7 +15,7 @@ class Demo
      * @title 测试demo接口
      * @description 接口说明
      * @author 开发者
-     * @url /index/demo
+     * @url /demo
      * @method POST
      *
      * @header name:device require:1 default: desc:设备号
@@ -45,7 +45,7 @@ class Demo
      * @title 登录接口
      * @description 接口说明
      * @author 开发者
-     * @url /index/demo/login
+     * @url /demo/login
      * @method GET
      * @module 用户模块
 
