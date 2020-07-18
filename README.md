@@ -7,7 +7,8 @@ composer require misscx/api-doc dev-master
 ```
 
 ####2、静态资源复制
-- 将本插件目录src/apidoc复制到的到网站静态资源目录内，如将apidoc目录复制到网站根目录/static/apidoc。
+- 将本插件目录src/apidoc复制到的到网站静态资源目录内，如将apidoc目录复制到网站根目录的/static下，目录结构如下：
+/static/apidoc
 
 ####3、配置参数
 安装好扩展后在 app\config\ 文件夹下会生成 doc.php 配置文件，打开配置文件修改如下内容：
@@ -18,22 +19,21 @@ composer require misscx/api-doc dev-master
 - 在controller参数中添加需要生成文档的类
 ```
     'controller' => [
-        'app\\index\\controller\\Demo' //这个是控制器的命名空间+控制器名称
+        'app\\controller\\Demo' //这个是控制器的命名空间+控制器名称
     ]
 ```
 - 配置路由
-将本扩展src目录内route文件夹中的doc.php复制到路由目录内。
+将本扩展src目录内route文件夹中的路由配置文件doc.php复制到路由目录内，如：/route/doc.php。
 
-####4、在相关接口类中增加注释参数( group 参数将接口分组，可选)
-
-####5、注释举例
-- 插件目录下有个Demo.php，可将其放入对应目录，查看效果
-- 方法如下：返回参数支持数组及多维数组
+####4、注释举例
+- 插件目录下有个Demo.php，可将其放入app/controller/下,单应用模式下有效，对于多应用模式，请根Demo.php进行修改。
+- Demo.php文件如下：返回参数支持数组及多维数组
 ```
 <?php
-namespace app\index\controller;
+namespace app\controller;
 
 use think\facade\Request;
+
 /**
  * @title 测试demo
  * @description 接口说明
@@ -47,7 +47,7 @@ class Demo
      * @title 测试demo接口
      * @description 接口说明
      * @author 开发者
-     * @url /index/demo
+     * @url /demo
      * @method POST
      *
      * @header name:device require:1 default: desc:设备号
@@ -77,7 +77,7 @@ class Demo
      * @title 登录接口
      * @description 接口说明
      * @author 开发者
-     * @url /index/demo/login
+     * @url /demo/login
      * @method GET
      * @module 用户模块
 
@@ -101,6 +101,6 @@ class Demo
 
 
 ###特别鸣谢
-本扩展基于weiwei/api-doc ThinkPHP5.0改造而来，本人非常喜欢原扩展，无奈ThinkPHP出6.0发布以来原作者一直未更新该扩展，本人经修改后发布出来，在此对原作者表示由衷感谢和敬意！
+本扩展基于weiwei/api-doc ThinkPHP5.0改造而来，本人非常喜欢原扩展，无奈ThinkPHP6.0发布以来原作者一直未更新该扩展，本人经修改后发布出来，在此对原作者表示由衷感谢和敬意！
 
 原扩展在地址：[https://github.com/zhangweiwei0326/api-doc](https://github.com/zhangweiwei0326/api-doc "原扩展在地址").
