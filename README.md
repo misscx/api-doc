@@ -6,7 +6,8 @@
 composer require misscx/api-doc dev-master
 ```
 
-####2、复制插件目录到网站静态资源目录
+####2、静态资源复制
+- 将本插件目录src/apidoc复制到的到网站静态资源目录内，如将apidoc目录复制到网站根目录/static/apidoc。
 
 ####3、配置参数
 安装好扩展后在 app\config\ 文件夹下会生成 doc.php 配置文件，打开配置文件修改如下内容：
