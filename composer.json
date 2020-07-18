@@ -12,10 +12,7 @@
     "autoload": {
         "psr-4": {
             "Api\\Doc\\": "src"
-        },
-        "files": [
-            "src/helper.php"
-        ]
+        }
     },
     "require": {
         "topthink/think-helper": ">=1.0.4",
