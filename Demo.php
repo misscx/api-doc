@@ -39,7 +39,7 @@ class Demo
         //接口代码
         $header = Request::header();
         $data = Request::request();
-        echo json_encode(["code"=>200, "message"=>"success", "data"=>['header'=>$header,'data'=>$data]]);
+        return json(["code"=>200, "message"=>"success", "data"=>['header'=>$header,'data'=>$data]]);
     }
 
     /**
@@ -62,6 +62,6 @@ class Demo
         //接口代码
         $header = Request::header();
         $data = Request::request();
-        echo json_encode(["code"=>200, "message"=>"success", "data"=>['header'=>$header,'data'=>$data]]);
+        return json(["code"=>200, "message"=>"success", "data"=>['header'=>$header,'data'=>$data]]);
     }
 }
