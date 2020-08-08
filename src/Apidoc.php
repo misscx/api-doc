@@ -229,7 +229,6 @@ class Apidoc
     {
         $curl = curl_init();
         if (count($data) && $method == "GET") {
-            $data = array_filter($data);
             $url .= "?".http_build_query($data);
             $url = str_replace(array('%5B0%5D'), array('[]'), $url);
         }
