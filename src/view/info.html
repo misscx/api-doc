@@ -7,9 +7,9 @@
 {block name="main"}
 <div class="container">
     <div class="jumbotron">
-        <p class="bg-success" style="font-size: 18px;">文档地址：{$root}/doc?name={$doc['name']}</p>
+        <p class="bg-success" style="font-size: 18px;">文档地址：{$root}/doc/info?name={$doc['name']}</p>
         <h2>接口：{$doc.title|default="请设置title注释"}</h2>
-        <p>接口地址：{$doc.url|default="请设置url注释"} <span class="label label-success">{$doc.method|default='GET'}</span></p>
+        <p>接口地址：{$root}{$doc.url|default="请设置url注释"} <span class="label label-success">{$doc.method|default='GET'}</span></p>
         <p class="text-primary">{$doc.title|default="请设置title注释"} -- {$doc.author|default="请设置auhtor注释"}</p>
         <br/>
         <p><strong>{$doc.description|default=""}</strong></p><br/>
@@ -17,6 +17,8 @@
         <ul id="myTab" class="nav nav-tabs">
             <li class="active"><a href="#info" data-toggle="tab">接口信息</a></li>
             <li><a href="#test" data-toggle="tab">在线测试</a></li>
+            <li><a href="#php" data-toggle="tab">PHP代码</a></li>
+            <li><a href="#python" data-toggle="tab">Python代码</a></li>
         </ul>
         <div class="tab-content">
             <!--info-->
@@ -123,7 +125,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">{$param.name|default=""}</label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" type="text" name="{$param.name|default=''}" value="">
+                                    <input class="form-control" type="text" name="{$param.name|default=''}" value="" placeholder="{if condition="$param.type eq '文件'"}包含文件上传，无法在线调试，建议使用postman或apifox等专业工具{/if}">
                                 </div>
                                 <div class="col-sm-4"><label class="control-label text-warning"></label></div>
                             </div>
@@ -171,6 +173,92 @@
 
             </div>
             <!--test-->
+<div class="tab-pane fade in" id="php">
+<h3>PHP示例代码</h3>
+<textarea readonly style="width:100%;height:600px;background:#000;color:#fff;">
+&lt;?php
+class CYApi{
+
+	protected $accesskey='';#accesskey
+
+	public function __construct($accesskey)
+	{
+		$this->accesskey = $accesskey;
+	}
+
+	public function post($url, $data){
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+			'accesskey: '.$this->accesskey
+		));
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 120);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);	
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		$result = curl_exec($curl);
+		curl_close($curl);
+		return $result;
+	}
+
+	public function get($url,$data=array()){
+		$url .= '?'.http_build_query($data);
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 120);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+			'accesskey: '.$this->accesskey
+		));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		$data = curl_exec($curl);
+		curl_close($curl);
+		return $data;
+	}
+}
+
+#实例化对像
+$api = new CYApi('accesskey');#秘钥accesskey，请登录管理后台->个人中心->API信息查看。
+#请求接口
+$r = $api->{if condition="isset($doc['method']) && strtoupper($doc['method']) == 'GET'"}get{else}post{/if}('https://api.mychunyan.com{$doc.url|default="请设置url注释"}',{if condition="isset($doc.param)"}array(
+{volist name="doc.param" id="param"}
+  '{$param.name|default=''}'=>'参数值', //类型：{$param.type|default="-"}；{if condition="$param.require eq 1"}必填{else/}非必填{/if}；{$param.desc|default="-"} 
+{/volist}){/if});
+print_r($r);
+</textarea>
+</div>
+
+<div class="tab-pane fade in" id="python">
+<h3>Python示例代码</h3>
+<textarea readonly style="width:100%;height:600px;background:#000;color:#fff;">
+# coding=utf-8
+
+import requests
+
+url = "https://api.mychunyan.com{$doc.url|default="请设置url注释"}"
+headers = {
+    "accesskey": "accesskey",
+}
+#秘钥accesskey，请登录管理后台->个人中心->API信息查看。
+data = {
+{if condition="isset($doc.param)"}
+{volist name="doc.param" id="param"}
+    "{$param.name|default=''}":"参数值", #类型：{$param.type|default="-"}；{if condition="$param.require eq 1"}必填{else/}非必填{/if}；{$param.desc|default="-"} 
+{/volist}
+{/if}
+}
+response = requests.{if condition="isset($doc['method']) && strtoupper($doc['method']) == 'GET'"}get{else}post{/if}(url, data=data, headers=headers)
+result = response.json()
+print(result)
+</textarea>
+</div>
+			
         </div>
 
 
@@ -180,7 +268,7 @@
         </div>
     </div>
 
-    <p>&copy; {$copyright} <p>
+    <p>&copy; {$copyright|raw} <p>
 </div>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="addParamModal" tabindex="-1" role="dialog"
